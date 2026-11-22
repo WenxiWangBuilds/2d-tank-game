@@ -1,16 +1,29 @@
 public class Bullet {
-    Vector position;
-    Vector direction;
-    double speed = 400; //pix per second
+    public static final double RADIUS = 10;
 
+    private Vector position;
+    private final Vector velocity;
+    private final boolean fromPlayer;
 
-    public Bullet(Vector position, Vector direction){
+    public Bullet(Vector position, Vector direction) {
+        this(position, direction, 700, true);
+    }
+
+    public Bullet(Vector position, Vector direction, double speed, boolean fromPlayer) {
         this.position = position;
-        this.direction = direction;
-    }  
+        this.velocity = direction.normalized().scale(speed);
+        this.fromPlayer = fromPlayer;
+    }
 
-    public void update(double delta){ //delta change is the amount of time that passed between the last frame and this frame, updates everyr frame
-        position = position.add(direction.scale(speed).scale(delta)); //new position = old position + velocity * time (delta)
+    public void update(double delta) {
+        position = position.add(velocity.scale(delta));
+    }
 
+    public Vector getPosition() {
+        return position;
+    }
+
+    public boolean isFromPlayer() {
+        return fromPlayer;
     }
 }
